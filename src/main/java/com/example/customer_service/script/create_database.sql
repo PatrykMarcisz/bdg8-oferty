@@ -9,7 +9,7 @@ set @@global.time_zone = '+2:00';
 -- create, drop, alter, insert, update, select, delete
 create user 'customer_service_user'@'localhost' identified by 'qwe123';
 grant 
-	create, drop, alter, insert, update, select, delete
+	create, drop, alter, insert, update, select, delete, references
 on 
 	customer_service_db.*
 to 
