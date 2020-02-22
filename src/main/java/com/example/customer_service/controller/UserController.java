@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController   // mapuje żądania http i zwraca Obiekt API
@@ -19,7 +20,10 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    @GetMapping("/users")
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
     @GetMapping("/users/id={user_id}")      // {część zmienna ścieżki}
     public User getUserById(@PathVariable("user_id") Long user_id){
         Optional<User> userOpt = userService.getUserById(user_id);
