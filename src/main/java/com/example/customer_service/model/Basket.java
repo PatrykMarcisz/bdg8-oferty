@@ -14,9 +14,9 @@ import java.time.LocalDate;
 public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId;
-    private LocalDate orderStart;
-    private LocalDate orderDeadline;
+    private Long basketId;
+    private LocalDate basketStart;
+    private LocalDate basketDeadline;
     @ManyToOne()
     @JoinColumn(name = "task_id")
     private Task task;
