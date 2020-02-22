@@ -30,9 +30,8 @@ public class UserController {
     }
     @PostMapping("/register")
     public Boolean register(@RequestParam String name, @RequestParam String lastName, @RequestParam String email,
-                            @RequestParam String password, @RequestParam String companyName,
-                            @RequestParam String companyAddress, @RequestParam String nip){
-        if(nip.equals("")){
+                            @RequestParam String password, String companyName, String companyAddress, String nip){
+        if(nip == null){
         return userService.register(
                 new User(name, lastName, email, password, LocalDateTime.now(), true, new ArrayList<>())
             );
@@ -41,5 +40,17 @@ public class UserController {
                 new User(name, lastName, email, password, LocalDateTime.now(), true, new ArrayList<>(),
                 companyName, companyAddress, nip)
         );
+    }
+    @PutMapping("/update_password")
+    public Boolean updatePassword(){
+        return false;
+    }
+    @DeleteMapping("/delete")
+    public Boolean deleteUserByEmail(@RequestParam String userEmail){
+        return userService.deleteUser(userEmail);
+    }
+    @PutMapping("/updateUserStatus")
+    public Boolean updateStatus(@PathVariable("user_id") Long userId, @PathVariable("statsu") Boolean status){
+        return userService.updateStatus(userId,status);
     }
 }

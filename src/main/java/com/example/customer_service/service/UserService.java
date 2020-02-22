@@ -33,4 +33,23 @@ public class UserService {
             return true;
         }
     }
+    public Boolean deleteUser(String userEmail){
+        User user = userRepository.findUserByEmail(userEmail);
+        if(user != null) {
+            userRepository.delete(user);
+            return true;
+        }
+        return false;
+    }
+    public Boolean updateStatus(Long userId, Boolean status){
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()){
+            User user = userOpt.get();
+            user.setStatus(status);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
 }
