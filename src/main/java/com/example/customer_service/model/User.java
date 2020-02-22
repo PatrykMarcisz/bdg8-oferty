@@ -35,8 +35,35 @@ public class User {
     private Boolean status;
 
     @OneToMany(mappedBy = "user")
-    private List<Task> tasks;
+    private List<Basket> baskets;
 
     @OneToMany(mappedBy = "user")
-    private List<Basket> orders;
+    private List<Task> tasks;
+    private String companyName;
+    private String companyAddress;
+    private String companyNip;
+
+    // konstruktor user
+    public User(String name, String lastName, String email, String password, LocalDateTime registrationDate, Boolean status, List<Basket> baskets) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.registrationDate = registrationDate;
+        this.status = status;
+        this.baskets = baskets;
+    }
+    // kontruktor company
+    public User(String name, String lastName, String email, String password, LocalDateTime registrationDate, Boolean status, List<Task> tasks, String companyName, String companyAddress, String companyNip) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.registrationDate = registrationDate;
+        this.status = status;
+        this.tasks = tasks;
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+        this.companyNip = companyNip;
+    }
 }
