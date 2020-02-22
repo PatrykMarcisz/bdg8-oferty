@@ -30,10 +30,10 @@ public class Task {
     private Double price;
     private LocalDateTime publicationDate;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "task")
-    private List<Order> orders;
+    private List<Basket> orders;
 }
