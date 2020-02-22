@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,4 +33,8 @@ public class User {
     private Set<Role> roles;
     private LocalDateTime registrationDate;
     private Boolean status;
+    @OneToMany(
+        mappedBy = "user"
+    )
+    private List<Task> tasks;
 }
