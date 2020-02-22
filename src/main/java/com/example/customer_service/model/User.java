@@ -33,8 +33,12 @@ public class User {
     private Set<Role> roles;
     private LocalDateTime registrationDate;
     private Boolean status;
+    
     @OneToMany(
         mappedBy = "user"
     )
     private List<Task> tasks;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 }

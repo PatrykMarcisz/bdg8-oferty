@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,5 +31,9 @@ public class Task {
     private LocalDateTime publicationDate;
 
     @ManyToOne()
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "task")
+    private List<Order> orders;
 }
