@@ -74,15 +74,15 @@
         <!--formularz-->
         <h1> Formularz rejestracji</h1>
         <hr>
-        <form th:action="@{/registration}" method="post">
+        <form th:action="@{/registration}" th:method="post" th:object="${user}">
           <div class="form-group">
-          <input th:type="text" th:placeholder="imię" class="form-control"></br>
-            <input th:type="text" th:placeholder="nazwisko" class="form-control"></br>
-            <input th:type="email" th:placeholder="e-mail" class="form-control"></br>
-            <input th:type="password" th:placeholder="hasło" class="form-control"></br>
-            <input th:type="text" th:placeholder="'nazwa firmy - nieobowiązkowe'" class="form-control"></br>
-            <input th:type="text" th:placeholder="'adres firmy - nieobowiązkowe'" class="form-control"></br>
-            <input th:type="text" th:placeholder="'nip firmy - nieobowiązkowe'" class="form-control"></br>
+            <input th:field="*{name}" th:type="text" th:placeholder="imię" class="form-control"></br>
+            <input th:field="*{lastName}" th:type="text" th:placeholder="nazwisko" class="form-control"></br>
+            <input th:field="*{email}" th:type="email" th:placeholder="e-mail" class="form-control"></br>
+            <input th:field="*{password}" th:type="password" th:placeholder="hasło" class="form-control"></br>
+            <input th:field="*{companyName}" th:type="text" th:placeholder="'nazwa firmy - nieobowiązkowe'" class="form-control"></br>
+            <input th:field="*{companyAddress}" th:type="text" th:placeholder="'adres firmy - nieobowiązkowe'" class="form-control"></br>
+            <input th:field="*{companyNip}" th:type="text" th:placeholder="'nip firmy - nieobowiązkowe'" class="form-control"></br>
             <input th:type="submit" value="zarejestruj" class="btn btn-primary mt-2 float-center">
           </div>
         </form>
