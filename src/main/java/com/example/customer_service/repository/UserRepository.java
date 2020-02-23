@@ -23,8 +23,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
     List<Object[]> findAllEmailAndRoleName();
     // aktywuj wszystkich użytkowników adnotacją Query
     @Modifying                                                      // executeUpdate
-    @Query(value = "UPDATE user SET status = 1", nativeQuery = true)
-    void activateAllUsers();
+    @Query(value = "UPDATE user SET status = :status", nativeQuery = true)
+    void changeStatusToUsers(@Param("status") Boolean status);
     // usuń wybraną role po role_name dla wszystkich użytkowników
     @Modifying
     @Query(value =

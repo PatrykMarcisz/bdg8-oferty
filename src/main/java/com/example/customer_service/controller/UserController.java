@@ -78,9 +78,9 @@ public class UserController {
     public void findAllEmailAndRoleName(){
         userService.findAllEmailAndRoleName();
     }
-    @PutMapping("/activeAllUsers")
-    public void activeAllUsers(){
-        userService.activateAllUsers();
+    @PutMapping("/changeAllUsersStatus")
+    public void changeStatusToUsers(@RequestParam("status") Boolean status){
+        userService.changeStatusToUsers(status);
     }
     @DeleteMapping("/deleteUserRoleNames")
     public void deleteUserRoleNames(@RequestParam String roleName){

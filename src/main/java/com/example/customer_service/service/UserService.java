@@ -121,8 +121,8 @@ public class UserService {
     public void findAllEmailAndRoleName(){
         userRepository.findAllEmailAndRoleName().forEach(o -> System.out.println(o[0] + " : " + o[1]));
     }
-    public void activateAllUsers(){
-        userRepository.activateAllUsers();
+    public void changeStatusToUsers(Boolean status){
+        userRepository.changeStatusToUsers(status);
     }
     public void deleteAllRoleNamesFromUser(String roleName){
         userRepository.deleteAllRoleNamesFromUser(roleName);
