@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Root;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service            // klasa logiki biznesowej zarządzana w Spring Context
 public class UserService {
@@ -32,6 +30,11 @@ public class UserService {
         if (userRepository.findAll().stream().anyMatch(u -> u.getEmail().equals(user.getEmail()))) {
             return false;
         } else {
+            if(user.getCompanyNip() == null){
+                user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findFirstByRoleName("ROLE_USER"))));
+            } else {
+                user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findFirstByRoleName("ROLE_COMPANY"))));
+            }
             userRepository.save(user);      // INSERT INTO USER
             return true;
         }
