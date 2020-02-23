@@ -74,4 +74,9 @@ public class UserController {
     public Boolean removeRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName){
         return userService.removeRoleFromUser(roleName, userId);
     }
+    @GetMapping("/findUsersWithRoles")
+    public void findAllEmailAndRoleName(){
+        userService.findAllEmailAndRoleName();
+    }
+
 }
