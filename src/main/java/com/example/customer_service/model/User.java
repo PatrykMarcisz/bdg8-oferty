@@ -23,8 +23,9 @@ public class User {
     private String name;
     private String lastName;
     private String email;
-    private String password;
-    @ManyToMany         // relacja wiele do wielu
+    private String password;                     // FetchType.Eager -> pobiera automatycznie
+                                                 // powiązania z tabelką Role
+    @ManyToMany(fetch = FetchType.EAGER)         // relacja wiele do wielu
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),

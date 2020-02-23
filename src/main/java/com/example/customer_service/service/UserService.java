@@ -1,26 +1,27 @@
 package com.example.customer_service.service;
 
 import com.example.customer_service.model.User;
+import com.example.customer_service.repository.RoleRepository;
 import com.example.customer_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
 @Service            // klasa logiki biznesowej zarządzana w Spring Context
 public class UserService {
     private UserRepository userRepository;
-
-    @Autowired              // wstrzykiwanie zależności
-    public UserService(UserRepository userRepository) {
+    private RoleRepository roleRepository;
+    @Autowired
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
-
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
     public Optional<User> getUserById(Long user_id) {
         return userRepository.findById(user_id);
     }
