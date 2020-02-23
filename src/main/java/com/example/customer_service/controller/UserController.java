@@ -78,6 +78,13 @@ public class UserController {
     public void findAllEmailAndRoleName(){
         userService.findAllEmailAndRoleName();
     }
-    
+    @PutMapping("/activeAllUsers")
+    public void activeAllUsers(){
+        userService.activateAllUsers();
+    }
+    @DeleteMapping("/deleteUserRoleNames")
+    public void deleteUserRoleNames(@RequestParam String roleName){
+        userService.deleteAllRoleNamesFromUser(roleName);
+    }
 
 }
