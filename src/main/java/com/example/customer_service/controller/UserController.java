@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
 import java.util.*;
-
+@RequestMapping("/rest")
 @RestController   // mapuje żądania http i zwraca Obiekt API
 //@Controller     // mapuje żądania http i zwraca nazwę widoku gdzie są przekazywane Obiekty
 public class UserController {

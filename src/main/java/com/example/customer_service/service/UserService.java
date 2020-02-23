@@ -1,10 +1,12 @@
 package com.example.customer_service.service;
 
+import com.example.customer_service.configuration.PasswdEncoder;
 import com.example.customer_service.model.Role;
 import com.example.customer_service.model.User;
 import com.example.customer_service.repository.RoleRepository;
 import com.example.customer_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Root;
@@ -12,6 +14,9 @@ import java.util.*;
 
 @Service            // klasa logiki biznesowej zarządzana w Spring Context
 public class UserService {
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     @Autowired
@@ -19,6 +24,7 @@ public class UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -35,6 +41,7 @@ public class UserService {
             } else {
                 user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findFirstByRoleName("ROLE_COMPANY"))));
             }
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);      // INSERT INTO USER
             return true;
         }
