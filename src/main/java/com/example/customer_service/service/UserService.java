@@ -83,8 +83,9 @@ public class UserService {
                 userRepository.save(user);      // UPDATE USER SET ...
                 return true;
             }
+            return false;       // jest użytkownik o zadanym user_id ale podajesz istniejący w bazie email
         }
-        return false;
+        return false;           // nie ma takiego użytkownika w badzie po user_id
     }
 
 
