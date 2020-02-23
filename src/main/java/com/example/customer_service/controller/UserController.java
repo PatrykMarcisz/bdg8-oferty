@@ -66,4 +66,8 @@ public class UserController {
         return userService.updateUserById(userId, name, lastName,
                 email,password,companyName,companyAddress, companyNip);
     }
+    @PostMapping("/addRole")
+    public Boolean addRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName){
+        return userService.addRoleToUser(roleName, userId);
+    }
 }

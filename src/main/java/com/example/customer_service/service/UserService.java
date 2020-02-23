@@ -1,5 +1,6 @@
 package com.example.customer_service.service;
 
+import com.example.customer_service.model.Role;
 import com.example.customer_service.model.User;
 import com.example.customer_service.repository.RoleRepository;
 import com.example.customer_service.repository.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service            // klasa logiki biznesowej zarządzana w Spring Context
 public class UserService {
@@ -88,6 +90,29 @@ public class UserService {
         }
         return false;           // nie ma takiego użytkownika w badzie po user_id
     }
-
+    public Boolean addRoleToUser(String roleName, Long userId){
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isPresent()){
+            User user = userOpt.get();
+            Role role = roleRepository.findFirstByRoleName(roleName);
+            if (role == null) return false;
+            Set<Role> roles = user.getRoles();  // zbiór ról użytkownika
+            roles.add(role);                    // dodanie nowej roli dla użytkownika
+            user.setRoles(roles);               // aktualizacja zbioru ról
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+    public Boolean removeRoleFromUser(String roleName, Long userId){
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isPresent()){
+            User user = userOpt.get();
+            user.getRoles().remove(roleRepository.findFirstByRoleName(roleName));
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
 
 }
