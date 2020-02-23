@@ -108,7 +108,11 @@ public class UserService {
         Optional<User> userOpt = userRepository.findById(userId);
         if(userOpt.isPresent()){
             User user = userOpt.get();
-            user.getRoles().remove(roleRepository.findFirstByRoleName(roleName));
+            Role role = roleRepository.findFirstByRoleName(roleName);
+            if (role == null) return false;
+            Set<Role> roles = user.getRoles();
+            roles.remove(role);
+            user.setRoles(roles);
             userRepository.save(user);
             return true;
         }
@@ -116,3 +120,6 @@ public class UserService {
     }
 
 }
+
+
+

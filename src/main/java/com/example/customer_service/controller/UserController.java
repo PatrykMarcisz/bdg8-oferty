@@ -70,4 +70,8 @@ public class UserController {
     public Boolean addRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName){
         return userService.addRoleToUser(roleName, userId);
     }
+    @DeleteMapping("/removeRole")
+    public Boolean removeRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName){
+        return userService.removeRoleFromUser(roleName, userId);
+    }
 }
