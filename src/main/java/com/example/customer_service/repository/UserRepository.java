@@ -2,8 +2,11 @@ package com.example.customer_service.repository;
 
 import com.example.customer_service.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -19,6 +22,14 @@ public interface UserRepository extends JpaRepository<User, Long>{
     )
     List<Object[]> findAllEmailAndRoleName();
     // aktywuj wszystkich użytkowników adnotacją Query
+    @Modifying                                                      // executeUpdate
+    @Query(value = "UPDATE user SET status = 1", nativeQuery = true)
+    void activateAllUsers();
+    // usuń wybraną role po role_name dla wszystkich użytkowników
+    @Modifying
+    @Query(value =
+            "delete from user_role where role_id = (select role_id from role where role_name = :roleName)",
+            nativeQuery = true)     // true -> składnia MySQL , false -> składnia JPQL
+    void deleteAllRoleNamesFromUser(@Param("roleName") String roleName);
 
-    // usuń wybranego po id użytkownika adnotacją Query
 }

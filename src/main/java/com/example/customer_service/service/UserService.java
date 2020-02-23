@@ -118,9 +118,14 @@ public class UserService {
         }
         return false;
     }
-
     public void findAllEmailAndRoleName(){
         userRepository.findAllEmailAndRoleName().forEach(o -> System.out.println(o[0] + " : " + o[1]));
+    }
+    public void activateAllUsers(){
+        userRepository.activateAllUsers();
+    }
+    public void deleteAllRoleNamesFromUser(String roleName){
+        userRepository.deleteAllRoleNamesFromUser(roleName);
     }
 }
 

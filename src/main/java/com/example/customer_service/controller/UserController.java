@@ -78,5 +78,6 @@ public class UserController {
     public void findAllEmailAndRoleName(){
         userService.findAllEmailAndRoleName();
     }
+    
 
 }
