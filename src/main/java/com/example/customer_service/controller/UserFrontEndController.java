@@ -10,5 +10,9 @@ public class UserFrontEndController {
     public String index(){
         return "index";     // nazwa widoku .html do wyświetlenia
     }
+    @GetMapping("/registration")
+    public String registration(){
+        return "registration";
+    }
 
 }
