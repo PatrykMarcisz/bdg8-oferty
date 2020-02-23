@@ -33,17 +33,19 @@ public class UserService {
             return true;
         }
     }
-    public Boolean deleteUser(String userEmail){
+
+    public Boolean deleteUser(String userEmail) {
         User user = userRepository.findUserByEmail(userEmail);
-        if(user != null) {
+        if (user != null) {
             userRepository.delete(user);
             return true;
         }
         return false;
     }
-    public Boolean updateStatus(Long userId, Boolean status){
+
+    public Boolean updateStatus(Long userId, Boolean status) {
         Optional<User> userOpt = userRepository.findById(userId);
-        if (userOpt.isPresent()){
+        if (userOpt.isPresent()) {
             User user = userOpt.get();
             user.setStatus(status);
             userRepository.save(user);
@@ -51,8 +53,9 @@ public class UserService {
         }
         return false;
     }
-    public Boolean updatePassword(Long userId, String password1, String password2){
-        if(password1.equals(password2)){
+
+    public Boolean updatePassword(Long userId, String password1, String password2) {
+        if (password1.equals(password2)) {
             Optional<User> userOpt = userRepository.findById(userId);
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
@@ -63,5 +66,26 @@ public class UserService {
         }
         return false;
     }
+
+    public Boolean updateUserById(Long userId, String name, String lastName,
+                                  String email, String password, String companyName, String companyAddress, String companyNip) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            if(userRepository.findUserByEmail(email) == null) {
+                user.setName(name != null ? name : user.getName());
+                user.setLastName(lastName != null ? lastName : user.getLastName());
+                user.setEmail(email != null ? email : user.getEmail());
+                user.setPassword(password != null ? password : user.getPassword());
+                user.setCompanyName(companyName != null && user.getCompanyName() != null ? companyName : user.getCompanyName());
+                user.setCompanyAddress(companyAddress != null && user.getCompanyAddress() != null ? companyAddress : user.getCompanyAddress());
+                user.setCompanyNip(companyNip != null && user.getCompanyNip() != null ? companyNip : user.getCompanyNip());
+                userRepository.save(user);      // UPDATE USER SET ...
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

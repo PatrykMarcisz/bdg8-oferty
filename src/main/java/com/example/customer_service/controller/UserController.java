@@ -49,8 +49,6 @@ public class UserController {
     public Boolean updateStatus(
             @RequestParam("user_id") Long userId,
             @RequestParam("status") Boolean status){
-        System.out.println(userId);
-        System.out.println(status);
         return userService.updateStatus(userId, status);
     }
     @PutMapping("/updateUserPassword")
@@ -59,5 +57,13 @@ public class UserController {
             @RequestParam("password1") String password1,
             @RequestParam("password2") String password2){
         return userService.updatePassword(userId, password1, password2);
+    }
+    @PutMapping("/updateUser")
+    public Boolean updataUserById(
+            @RequestParam("user_id") Long userId,
+            String name, String lastName, String email, String password, String companyName, String companyAddress, String companyNip
+    ){
+        return userService.updateUserById(userId, name, lastName,
+                email,password,companyName,companyAddress, companyNip);
     }
 }
