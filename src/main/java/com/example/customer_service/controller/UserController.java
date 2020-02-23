@@ -41,16 +41,23 @@ public class UserController {
                 companyName, companyAddress, nip)
         );
     }
-    @PutMapping("/update_password")
-    public Boolean updatePassword(){
-        return false;
-    }
     @DeleteMapping("/delete")
     public Boolean deleteUserByEmail(@RequestParam String userEmail){
         return userService.deleteUser(userEmail);
     }
     @PutMapping("/updateUserStatus")
-    public Boolean updateStatus(@PathVariable("user_id") Long userId, @PathVariable("statsu") Boolean status){
-        return userService.updateStatus(userId,status);
+    public Boolean updateStatus(
+            @RequestParam("user_id") Long userId,
+            @RequestParam("status") Boolean status){
+        System.out.println(userId);
+        System.out.println(status);
+        return userService.updateStatus(userId, status);
+    }
+    @PutMapping("/updateUserPassword")
+    public Boolean updatePassword(
+            @RequestParam("user_id") Long userId,
+            @RequestParam("password1") String password1,
+            @RequestParam("password2") String password2){
+        return userService.updatePassword(userId, password1, password2);
     }
 }

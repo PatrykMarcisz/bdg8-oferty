@@ -51,5 +51,17 @@ public class UserService {
         }
         return false;
     }
+    public Boolean updatePassword(Long userId, String password1, String password2){
+        if(password1.equals(password2)){
+            Optional<User> userOpt = userRepository.findById(userId);
+            if (userOpt.isPresent()) {
+                User user = userOpt.get();
+                user.setPassword(password1);
+                userRepository.save(user);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
