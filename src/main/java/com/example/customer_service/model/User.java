@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -19,10 +22,14 @@ public class User {
     @Id                         // PRIMARY KEY
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
+    @NotBlank(message = "musisz podać imię")
     private String name;
+    @NotBlank
     private String lastName;
+    @Email
     private String email;
+//    @Pattern(regexp = "...")
+    @NotBlank
     private String password;                     // FetchType.Eager -> pobiera automatycznie
                                                  // powiązania z tabelką Role
     @ManyToMany(fetch = FetchType.EAGER)         // relacja wiele do wielu

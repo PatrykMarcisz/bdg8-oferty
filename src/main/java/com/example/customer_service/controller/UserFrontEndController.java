@@ -1,6 +1,8 @@
 package com.example.customer_service.controller;
 
 import com.example.customer_service.model.User;
+import com.example.customer_service.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +14,11 @@ import javax.validation.Valid;
 
 @Controller
 public class UserFrontEndController {
+    private UserService userService;
+    @Autowired
+    public UserFrontEndController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String index(){
@@ -29,7 +36,7 @@ public class UserFrontEndController {
             return "registration";
         }
         // zapis do bazy
-        System.out.println(user);
+        userService.register(user);
         return "index";
     }
 

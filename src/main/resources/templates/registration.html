@@ -77,7 +77,9 @@
         <form th:action="@{/registration}" th:method="post" th:object="${user}">
           <div class="form-group">
             <input th:field="*{name}" th:type="text" th:placeholder="imię" class="form-control"></br>
+            <p th:errors="*{name}"></p>
             <input th:field="*{lastName}" th:type="text" th:placeholder="nazwisko" class="form-control"></br>
+            <p th:errors="*{lastName}"></p>
             <input th:field="*{email}" th:type="email" th:placeholder="e-mail" class="form-control"></br>
             <input th:field="*{password}" th:type="password" th:placeholder="hasło" class="form-control"></br>
             <input th:field="*{companyName}" th:type="text" th:placeholder="'nazwa firmy - nieobowiązkowe'" class="form-control"></br>
