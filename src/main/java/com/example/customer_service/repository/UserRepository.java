@@ -27,11 +27,4 @@ public interface UserRepository extends JpaRepository<User, Long>{
     @Modifying                                                      // executeUpdate
     @Query(value = "UPDATE user SET status = :status", nativeQuery = true)
     void changeStatusToUsers(@Param("status") Boolean status);
-    // usuń wybraną role po role_name dla wszystkich użytkowników
-    @Modifying
-    @Query(value =
-            "delete from user_role where role_id = (select role_id from role where role_name = :roleName)",
-            nativeQuery = true)     // true -> składnia MySQL , false -> składnia JPQL
-    void deleteAllRoleNamesFromUser(@Param("roleName") String roleName);
-
 }

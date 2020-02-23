@@ -125,7 +125,7 @@ public class UserService {
         userRepository.changeStatusToUsers(status);
     }
     public void deleteAllRoleNamesFromUser(String roleName){
-        userRepository.deleteAllRoleNamesFromUser(roleName);
+        roleRepository.deleteAllRoleNamesFromUser(roleName);
     }
 }
 
