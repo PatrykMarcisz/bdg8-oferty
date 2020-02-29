@@ -35,6 +35,7 @@ public class TaskService {
     public void addTask(String content, Double price, Set<Category> categories, User user) {
         Task task = new Task(categories, content, price, user);
         task.setPublicationDate(LocalDateTime.now());
+        System.out.println(task);
         taskRepository.save(task);
     }
 

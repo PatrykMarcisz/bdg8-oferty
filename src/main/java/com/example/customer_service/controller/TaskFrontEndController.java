@@ -35,22 +35,23 @@ public class TaskFrontEndController {
     @GetMapping("/addTask")
     public String addTask(Authentication auth, Model model){
         model.addAttribute("isLogged", auth != null);
-        UserDetails principal = (UserDetails) auth.getPrincipal();
-        String loggedEmail = principal.getUsername();
-        User loggedUser = userService.getUserByEmail(loggedEmail);
-        Task task = new Task();
-        task.setUser(loggedUser);
-        model.addAttribute("task", task);                                 // pusty obiekt taska
+        model.addAttribute("task", new Task());                                 // pusty obiekt taska
         model.addAttribute("categories", taskService.getAllTaskCategories());   // lista wszystkich dostępnych w db kategorii
         return "addTask";
     }
     @PostMapping("/addTask")
     public String addTask(
-            @ModelAttribute @Valid Task task, BindingResult bindingResult){
+            @ModelAttribute @Valid Task task,
+            BindingResult bindingResult,
+            Authentication auth
+    ){
 //        if(bindingResult.hasErrors()){
 //            return "addTask";
 //        }
-        taskService.addTask(task.getContent(), task.getPrice(), new HashSet<>(), null);
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        String loggedEmail = principal.getUsername();
+        User loggedUser = userService.getUserByEmail(loggedEmail);
+        taskService.addTask(task.getContent(), task.getPrice(), new HashSet<>(), loggedUser);
         return "redirect:/";
     }
     @GetMapping("/tasks&{taskId}")

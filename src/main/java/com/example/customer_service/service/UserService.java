@@ -140,6 +140,10 @@ public class UserService {
     public void deleteAllRoleNamesFromUser(String roleName){
         roleRepository.deleteAllRoleNamesFromUser(roleName);
     }
+
+    public User getUserByEmail(String loggedEmail){
+        return userRepository.findUserByEmail(loggedEmail);
+    }
 }
 
 
