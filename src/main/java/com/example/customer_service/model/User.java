@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -22,15 +23,26 @@ public class User {
     @Id                         // PRIMARY KEY
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @NotBlank(message = "musisz podać imię")
+    @NotBlank(message = "pole obowiązkowe")
+    @Size(min = 3, max = 255, message = "imię musi zawierać od {min} do {max} znaków")
     private String name;
-    @NotBlank
+    @NotBlank(message = "pole obowiązkowe")
+    @Size(min = 3, max = 255, message = "nazwisko musi zawierać od {min} do {max} znaków")
     private String lastName;
-    @Email
+    @NotBlank(message = "pole obowiązkowe")
+    @Email(message = "niepoprawny adres e-mail")
     private String email;
 //    @Pattern(regexp = "...")
-    @NotBlank
-    private String password;                     // FetchType.Eager -> pobiera automatycznie
+    @NotBlank(message = "pole obowiązkowe")
+    @Size(min = 6, max = 255, message = "hasło musi zawierać od {min} do {max} znaków")
+    private String password;
+
+    private String companyName;
+    private String companyAddress;
+//    @Size(min = 10, max = 10, message = "nip musi zawierać od {min} do {max} znaków")
+    private String companyNip;
+
+                        // FetchType.Eager -> pobiera automatycznie
                                                  // powiązania z tabelką Role
     @ManyToMany(fetch = FetchType.EAGER)         // relacja wiele do wielu
     @JoinTable(
@@ -47,9 +59,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
-    private String companyName;
-    private String companyAddress;
-    private String companyNip;
+
 
     // konstruktor user
     public User(String name, String lastName, String email, String password, LocalDateTime registrationDate, Boolean status, List<Basket> baskets) {

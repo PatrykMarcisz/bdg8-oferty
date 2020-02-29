@@ -76,15 +76,21 @@
         <hr>
         <form th:action="@{/registration}" th:method="post" th:object="${user}">
           <div class="form-group">
+            <p th:errors="*{name}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{name}" th:type="text" th:placeholder="imię" class="form-control"></br>
-            <p th:errors="*{name}"></p>
+            <p th:errors="*{lastName}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{lastName}" th:type="text" th:placeholder="nazwisko" class="form-control"></br>
-            <p th:errors="*{lastName}"></p>
+            <p th:errors="*{email}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{email}" th:type="email" th:placeholder="e-mail" class="form-control"></br>
+            <p th:errors="*{password}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{password}" th:type="password" th:placeholder="hasło" class="form-control"></br>
+            <p th:errors="*{companyName}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{companyName}" th:type="text" th:placeholder="'nazwa firmy - nieobowiązkowe'" class="form-control"></br>
+            <p th:errors="*{companyAddress}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{companyAddress}" th:type="text" th:placeholder="'adres firmy - nieobowiązkowe'" class="form-control"></br>
+            <p th:errors="*{companyNip}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{companyNip}" th:type="text" th:placeholder="'nip firmy - nieobowiązkowe'" class="form-control"></br>
+
             <input th:type="submit" value="zarejestruj" class="btn btn-primary mt-2 float-center">
           </div>
         </form>
