@@ -30,13 +30,17 @@ public class UserFrontEndController {
         return "registration";
     }
     @PostMapping("/registration")                       // <- to przekazywane są dane rejestracji
-    public String registration(@ModelAttribute @Valid User user, BindingResult bindingResult){
+    public String registration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
             // poprawianie błędów
             return "registration";
         }
         // zapis do bazy
-        userService.register(user);
+        boolean isUniqueEmail = userService.register(user);
+        if(!isUniqueEmail){
+            model.addAttribute("isUniqueEmail", "adres "+user.getEmail()+" już istnieje w bazie danych");
+            return "registration";
+        }
         return "index";
     }
 

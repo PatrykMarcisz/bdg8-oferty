@@ -80,6 +80,7 @@
             <input th:field="*{name}" th:type="text" th:placeholder="imię" class="form-control"></br>
             <p th:errors="*{lastName}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{lastName}" th:type="text" th:placeholder="nazwisko" class="form-control"></br>
+            <p th:if="${isUniqueEmail != null}" th:text="${isUniqueEmail}" style="font-size: 10px" class="alert alert-danger"></p>
             <p th:errors="*{email}" style="font-size: 10px" class="alert alert-danger"></p>
             <input th:field="*{email}" th:type="email" th:placeholder="e-mail" class="form-control"></br>
             <p th:errors="*{password}" style="font-size: 10px" class="alert alert-danger"></p>

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service            // klasa logiki biznesowej zarządzana w Spring Context
@@ -36,12 +37,14 @@ public class UserService {
         if (userRepository.findAll().stream().anyMatch(u -> u.getEmail().equals(user.getEmail()))) {
             return false;
         } else {
-            if(user.getCompanyNip() == null){
+            user.setRegistrationDate(LocalDateTime.now());      // domyślna data rejestracji
+            user.setStatus(true);                               // domyśny status konta użytkownika
+            if(user.getCompanyNip().equals("")){
                 user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findFirstByRoleName("ROLE_USER"))));
             } else {
                 user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findFirstByRoleName("ROLE_COMPANY"))));
             }
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));   // szyfrowanie hasła BCrypt
             userRepository.save(user);      // INSERT INTO USER
             return true;
         }
