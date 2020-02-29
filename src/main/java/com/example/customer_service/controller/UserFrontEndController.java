@@ -22,6 +22,10 @@ public class UserFrontEndController {
         this.userService = userService;
         this.taskService = taskService;
     }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());

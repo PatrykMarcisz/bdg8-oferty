@@ -10,7 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()        // autoryzuj poniższe żądania http
-//                .antMatchers("/**").hasAnyRole("ADMIN")
+                .antMatchers("/addTask").hasAnyAuthority("ROLE_ADMIN","ROLE_COMPANY")
+                .antMatchers("/task*").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_USER")
                                                 // tu wprowadzamy żądania wymagające logowania
                 .anyRequest()
                 .permitAll()                    // wszystkie pozostałe żądania nie wymagają autoryzacji
