@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Clean Blog - Start Bootstrap Theme</title>
+  <title>Rejestracja</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,40 +26,28 @@
 <body>
 
   <!-- Navigation -->
+  <!--coś zaimportujemy-->
   <nav th:replace="fragments/navbar :: navbar"></nav>
   <!-- Page Header -->
-  <header th:replace="fragments/header :: header(title='ZLECENIA', subtitle='problem z papierami - zgłoś się do nas!')"></header>
-
+  <header th:replace="fragments/header :: header(title='LOGOWANIE', subtitle='zaloguj się')"></header>
   <!-- Main Content -->
-
   <div class="container">
-    <div class="row" >
+    <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <h1> Kliknij na zlecenie aby je zamówić </h1>
-        <p th:if="${info != null}" th:text="${info}" class="alert-info"> info </p>
-        <div class="post-preview" th:each="task : ${tasks}">
-          <a th:href="@{'tasks&'+${task.getTaskId()}}" >
-            <h2 class="post-title" th:text="${task.getContent()}">
-              content
-            </h2>
-            <h3 class="post-subtitle" th:text="${#numbers.formatDecimal(task.getPrice(),1,2)}+' PLN'">
-              price
-            </h3>
-          </a>
-          <!--<p class="post-meta" >-->
-            <!--category-->
-          <!--</p>-->
-          <hr>
-        </div>
-        <!-- Pager -->
-        <!--<div class="clearfix">-->
-          <!--<a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>-->
-        <!--</div>-->
+        <!--formularz-->
+        <h1> Formularz logowania</h1>
+        <hr>
+        <form th:action="@{/login-process}" th:method="post">
+          <div class="form-group">
+            <input th:name="email" th:type="email" th:placeholder="e-mail" class="form-control"></br>
+            <input th:name="password" th:type="password" th:placeholder="hasło" class="form-control"></br>
+            <input th:type="submit" value="zaloguj" class="btn btn-primary mt-2 float-center">
+          </div>
+        </form>
+        <hr>
       </div>
     </div>
   </div>
-
-  <hr>
 
   <!-- Footer -->
   <footer>
