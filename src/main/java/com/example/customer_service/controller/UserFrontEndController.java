@@ -1,6 +1,7 @@
 package com.example.customer_service.controller;
 
 import com.example.customer_service.model.User;
+import com.example.customer_service.service.TaskService;
 import com.example.customer_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,15 @@ import javax.validation.Valid;
 @Controller
 public class UserFrontEndController {
     private UserService userService;
+    private TaskService taskService;
     @Autowired
-    public UserFrontEndController(UserService userService) {
+    public UserFrontEndController(UserService userService, TaskService taskService) {
         this.userService = userService;
+        this.taskService = taskService;
     }
-
     @GetMapping("/")
-    public String index(){
+    public String index(Model model){
+        model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
         return "index";     // nazwa widoku .html do wyświetlenia
     }
     @GetMapping("/registration")                        // <- to wywołuje formularz rejestracji
