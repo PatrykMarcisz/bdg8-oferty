@@ -31,11 +31,12 @@
   <header th:replace="fragments/header :: header(title='ZLECENIA', subtitle='problem z papierami - zgłoś się do nas!')"></header>
 
   <!-- Main Content -->
-  <p th:if="${info != null}" th:text="${info}"> info </p>
+
   <div class="container">
-    <div class="row" th:each="task : ${tasks}">
+    <div class="row" >
       <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="post-preview" >
+        <p th:if="${info != null}" th:text="${info}" class="alert-info"> info </p>
+        <div class="post-preview" th:each="task : ${tasks}">
           <a th:href="@{'tasks&'+${task.getTaskId()}}" >
             <h2 class="post-title" th:text="${task.getContent()}">
               content
