@@ -4,6 +4,7 @@ import com.example.customer_service.model.User;
 import com.example.customer_service.service.TaskService;
 import com.example.customer_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,16 +24,19 @@ public class UserFrontEndController {
         this.taskService = taskService;
     }
     @GetMapping("/login")
-    public String login(){
+    public String login(Authentication auth, Model model){
+        model.addAttribute("isLogged", auth != null);
         return "login";
     }
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Authentication auth, Model model){
+        model.addAttribute("isLogged", auth != null);
         model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
         return "index";     // nazwa widoku .html do wyświetlenia
     }
     @GetMapping("/registration")                        // <- to wywołuje formularz rejestracji
-    public String registration(Model model){            // model komunikuje back-end z szablonem Thymeleaf
+    public String registration(Authentication auth, Model model){            // model komunikuje back-end z szablonem Thymeleaf
+        model.addAttribute("isLogged", auth != null);
         model.addAttribute("user", new User());       // przekazujemy do Thymelaf resolvera obiekt user
         return "registration";
     }

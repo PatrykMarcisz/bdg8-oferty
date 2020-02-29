@@ -4,6 +4,7 @@ import com.example.customer_service.model.Category;
 import com.example.customer_service.model.Task;
 import com.example.customer_service.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +27,8 @@ public class TaskFrontEndController {
         this.taskService = taskService;
     }
     @GetMapping("/addTask")
-    public String addTask(Model model){
+    public String addTask(Authentication auth, Model model){
+        model.addAttribute("isLogged", auth != null);
         model.addAttribute("task", new Task());                                 // pusty obiekt taska
         model.addAttribute("categories", taskService.getAllTaskCategories());   // lista wszystkich dostępnych w db kategorii
         return "addTask";
@@ -41,9 +43,11 @@ public class TaskFrontEndController {
     }
     @GetMapping("/tasks&{taskId}")
     public String addTaskToBasket(
+            Authentication auth,
             @PathVariable("taskId") Long taskId,
             Model model
     ){
+        model.addAttribute("isLogged", auth != null);
         model.addAttribute("info", "zlecenie zostało przyjęte");
         model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
         // ???

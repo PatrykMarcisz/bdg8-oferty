@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .jdbcAuthentication()
-                .usersByUsernameQuery("SELECT u.email, u.password, u.status FROM user u WHERE u.email = ?") // wyszukanie użytkownika po adresie email
+                .usersByUsernameQuery("SELECT u.email, u.password, status FROM user u WHERE u.email = ?") // wyszukanie użytkownika po adresie email
                 .authoritiesByUsernameQuery(
                         "SELECT u.email, r.role_name FROM user u JOIN user_role ur ON (u.user_id = ur.user_id) " +
                                 "JOIN role r ON (r.role_id = ur.role_id) WHERE u.email = ?")
