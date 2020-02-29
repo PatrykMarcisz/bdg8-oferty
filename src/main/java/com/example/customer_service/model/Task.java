@@ -30,6 +30,11 @@ public class Task {
     private Double price;
     private LocalDateTime publicationDate;
 
+    // metoda do dodawania kategorii do zbioru
+    public void addCategory(Category category){
+        this.categories.add(category);
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

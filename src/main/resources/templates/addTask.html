@@ -40,10 +40,15 @@
         <form th:action="@{/addTask}" th:method="post" th:object="${task}">
           <div class="form-group">
             <p th:errors="*{content}" style="font-size: 10px" class="alert alert-danger"></p>
-            <input th:field="*{content}" th:type="text" th:placeholder="nazwa zlecenia" class="form-control"></br>
+            <input th:field="*{content}" th:type="text" th:placeholder="'nazwa zlecenia'" class="form-control"></br>
             <p th:errors="*{price}" style="font-size: 10px" class="alert alert-danger"></p>
-            <input th:field="*{price}" th:type="number" th:min="0" th:step="1" th:placeholder="cena zlecenia" class="form-control"></br>
+            <input th:field="*{price}" th:type="number" th:min="0" th:step="1" th:placeholder="'cena zlecenia'" class="form-control"></br>
             <!--checkbox-->
+            <label> wybierz kategorie zlecenia </label>
+            <div th:each="c : ${categories}">
+              <input type="checkbox" th:text="${c.getCategoryName()}" th:field="*{categories}" th:value="${c}">
+              </br>
+            </div>
             <input th:type="submit" value="zatwierdź" class="btn btn-primary mt-2 float-center">
           </div>
         </form>
