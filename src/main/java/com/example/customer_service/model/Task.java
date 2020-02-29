@@ -36,4 +36,10 @@ public class Task {
 
     @OneToMany(mappedBy = "task")
     private List<Basket> orders;
+
+    public Task(Set<Category> categories, String content, Double price) {
+        this.categories = categories;
+        this.content = content;
+        this.price = price;
+    }
 }
