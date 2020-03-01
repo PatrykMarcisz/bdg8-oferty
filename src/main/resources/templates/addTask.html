@@ -45,8 +45,8 @@
             <input th:field="*{price}" th:type="number" th:min="0" th:step="1" th:placeholder="'cena zlecenia'" class="form-control"></br>
             <!--checkbox-->
             <label> wybierz kategorie zlecenia </label>
-            <div th:each="c : ${categories}">
-              <input type="checkbox" th:text="${c.getCategoryName()}" th:field="*{categories}" th:value="${c}">
+            <div th:each="c : ${cats}">
+              <input type="checkbox" th:field="*{categories}" th:text="${c.getCategoryName()}" th:value="${category}">
               </br>
             </div>
             <input th:type="submit" value="zatwierdź" class="btn btn-primary mt-2 float-center">

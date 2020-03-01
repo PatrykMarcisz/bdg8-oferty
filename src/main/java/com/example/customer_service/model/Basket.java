@@ -23,4 +23,11 @@ public class Basket {
     @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Basket(LocalDate basketStart, LocalDate basketDeadline, Task task, User user) {
+        this.basketStart = basketStart;
+        this.basketDeadline = basketDeadline;
+        this.task = task;
+        this.user = user;
+    }
 }

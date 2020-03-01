@@ -11,14 +11,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 
@@ -36,7 +35,7 @@ public class TaskFrontEndController {
     public String addTask(Authentication auth, Model model){
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("task", new Task());                                 // pusty obiekt taska
-        model.addAttribute("categories", taskService.getAllTaskCategories());   // lista wszystkich dostępnych w db kategorii
+        model.addAttribute("cats", taskService.getAllTaskCategories());   // lista wszystkich dostępnych w db kategorii
         return "addTask";
     }
     @PostMapping("/addTask")
@@ -45,13 +44,13 @@ public class TaskFrontEndController {
             BindingResult bindingResult,
             Authentication auth
     ){
-//        if(bindingResult.hasErrors()){
-//            return "addTask";
-//        }
+        if(bindingResult.hasErrors()){
+            return "addTask";
+        }
         UserDetails principal = (UserDetails) auth.getPrincipal();
         String loggedEmail = principal.getUsername();
         User loggedUser = userService.getUserByEmail(loggedEmail);
-        taskService.addTask(task.getContent(), task.getPrice(), new HashSet<>(), loggedUser);
+        taskService.addTask(task.getContent(), task.getPrice(), task.getCategories(), loggedUser);
         return "redirect:/";
     }
     @GetMapping("/tasks&{taskId}")
@@ -61,9 +60,13 @@ public class TaskFrontEndController {
             Model model
     ){
         model.addAttribute("isLogged", auth != null);
-        model.addAttribute("info", "zlecenie zostało przyjęte");
+        model.addAttribute("info",
+                "zlecenie "+taskService.getTaskById(taskId).get().getContent()+" zostało przyjęte " +
+                   "(termin realizacji: "+ LocalDate.now().plusDays(7) +")");
         model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
-        // ???
+        // przypisanie takska do koszyka zalogowanego użytkownika
+        taskService.addTaskToUserBasket(auth, taskId);
         return "index";
     }
+
 }
