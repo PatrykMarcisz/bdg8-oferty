@@ -27,8 +27,7 @@ public class UserFrontEndController {
     @GetMapping("/login")
     public String login(Authentication auth, Model model){
         model.addAttribute("isLogged", auth != null);
-        model.addAttribute("user", auth != null ?
-                userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()) );
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
         return "login";
     }
     @GetMapping("/")
@@ -42,6 +41,7 @@ public class UserFrontEndController {
     }
     @GetMapping("/registration")                        // <- to wywołuje formularz rejestracji
     public String registration(Authentication auth, Model model){            // model komunikuje back-end z szablonem Thymeleaf
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("user", new User());       // przekazujemy do Thymelaf resolvera obiekt user
         return "registration";
@@ -59,6 +59,7 @@ public class UserFrontEndController {
             model.addAttribute("isUniqueEmail", "adres "+user.getEmail()+" już istnieje w bazie danych");
             return "registration";
         }
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
         model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));         // do sprawdzania uprawnień R_A

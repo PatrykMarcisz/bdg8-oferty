@@ -33,6 +33,7 @@ public class TaskFrontEndController {
 
     @GetMapping("/addTask")
     public String addTask(Authentication auth, Model model){
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("task", new Task());                                 // pusty obiekt taska
         model.addAttribute("cats", taskService.getAllTaskCategories());   // lista wszystkich dostępnych w db kategorii
@@ -59,6 +60,8 @@ public class TaskFrontEndController {
             @PathVariable("taskId") Long taskId,
             Model model
     ){
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
+
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("info",
                 "zlecenie "+taskService.getTaskById(taskId).get().getContent()+" zostało przyjęte " +
