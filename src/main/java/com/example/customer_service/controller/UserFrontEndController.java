@@ -84,7 +84,7 @@ public class UserFrontEndController {
                 auth != null ?
                         new ArrayList<>(userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()).getRoles()) :
                         new ArrayList<>());
-
+        model.addAttribute("baskets", taskService.getBasketsForUser(auth));
         return "userProfile";
     }
 

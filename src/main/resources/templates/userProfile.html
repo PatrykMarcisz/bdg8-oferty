@@ -51,6 +51,7 @@
                     <ul>
                     <li th:each="r : ${roleList}" th:text="${r.getRoleName()}"> rola </li>
                     </ul>
+                    <a class="fas fa-user-edit" th:href="@{/user_edit}"> edytuj dane </a>
                 </div>
             </div>
 
@@ -71,29 +72,19 @@
                                 <th>Data realizacji</th>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Zamówienie</th>
-                                <th>Firma</th>
-                                <th>Cena</th>
-                                <th>Data zamówienia</th>
-                                <th>Data realizacji</th>
-                            </tr>
-                            </tfoot>
                             <tbody>
-                            <tr th:each="">
-                                <td>Zamówienie</td>
-                                <td>Firma</td>
-                                <td>Cena</td>
-                                <td>Data zamówienia</td>
-                                <td>Data realizacji</td>
+                            <tr th:each="b : ${baskets}">
+                                <td th:text="${b.getTask().getContent()}">Zamówienie</td>
+                                <td th:text="${b.getUser().getCompanyName()}">Firma</td>
+                                <td th:text="${#numbers.formatDecimal(b.getTask().getPrice(),1,2) + ' PLN'}">Cena</td>
+                                <td th:text="${#temporals.format(b.getBasketStart(), 'dd-MM-yyyy')}">Data zamówienia</td>
+                                <td th:text="${b.getBasketDeadline()+' '}">Data realizacji</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
