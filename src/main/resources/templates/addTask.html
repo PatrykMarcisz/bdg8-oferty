@@ -46,7 +46,7 @@
             <!--checkbox-->
             <label> wybierz kategorie zlecenia </label>
             <div th:each="c : ${cats}">
-              <input type="checkbox" th:field="*{categories}" th:text="${c.getCategoryName()}" th:value="${category}">
+              <input type="checkbox" th:field="*{categories}" th:text="${c.getCategoryName()}" th:value="${c.getCategoryId()}">
               </br>
             </div>
             <input th:type="submit" value="zatwierdź" class="btn btn-primary mt-2 float-center">
