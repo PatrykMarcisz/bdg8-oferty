@@ -45,7 +45,8 @@ public class UserFrontEndController {
         return "registration";
     }
     @PostMapping("/registration")                       // <- to przekazywane są dane rejestracji
-    public String registration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model){
+    public String registration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model,
+                               Authentication auth){
         if(bindingResult.hasErrors()){
             // poprawianie błędów
             return "registration";
@@ -56,6 +57,11 @@ public class UserFrontEndController {
             model.addAttribute("isUniqueEmail", "adres "+user.getEmail()+" już istnieje w bazie danych");
             return "registration";
         }
+        model.addAttribute("isLogged", auth != null);
+        model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
+        model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));         // do sprawdzania uprawnień R_A
+        model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));     // do sprawdzania uprawnień R_C
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
         return "index";
     }
 
