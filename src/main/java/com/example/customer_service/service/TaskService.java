@@ -62,7 +62,11 @@ public class TaskService {
             basketRepository.save(basket);
         }
     }
-    public void deleteTaskById(Long taskId){
-        taskRepository.deleteById(taskId);
+    public void updateTaskStatusById(Long taskId, Boolean status){
+        if(taskRepository.findById(taskId).isPresent()) {
+            Task task = taskRepository.findById(taskId).get();
+            task.setStatus(status);
+            taskRepository.save(task);
+        }
     }
 }
