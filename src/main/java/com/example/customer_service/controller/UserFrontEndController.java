@@ -67,5 +67,6 @@ public class UserFrontEndController {
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
         return "index";
     }
+    
 
 }

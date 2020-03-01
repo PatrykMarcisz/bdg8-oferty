@@ -61,12 +61,14 @@ public class TaskFrontEndController {
             Model model
     ){
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
-
         model.addAttribute("isLogged", auth != null);
+        model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
+        model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));         // do sprawdzania uprawnień R_A
+        model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));     // do sprawdzania uprawnień R_C
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
         model.addAttribute("info",
                 "zlecenie "+taskService.getTaskById(taskId).get().getContent()+" zostało przyjęte " +
                    "(termin realizacji: "+ LocalDate.now().plusDays(7) +")");
-        model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
         // przypisanie takska do koszyka zalogowanego użytkownika
         taskService.addTaskToUserBasket(auth, taskId);
         return "index";
