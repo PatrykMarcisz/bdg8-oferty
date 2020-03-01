@@ -5,6 +5,7 @@ import com.example.customer_service.service.TaskService;
 import com.example.customer_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,8 +33,9 @@ public class UserFrontEndController {
     public String index(Authentication auth, Model model){
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
-        model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));
-        model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));
+        model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));         // do sprawdzania uprawnień R_A
+        model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));     // do sprawdzania uprawnień R_C
+        model.addAttribute("loggedEmail", ((UserDetails)auth.getPrincipal()).getUsername());    // do sprawdzenia właściciela zadania
         return "index";     // nazwa widoku .html do wyświetlenia
     }
     @GetMapping("/registration")                        // <- to wywołuje formularz rejestracji
