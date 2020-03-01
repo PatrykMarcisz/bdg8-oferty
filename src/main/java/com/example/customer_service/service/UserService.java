@@ -151,6 +151,7 @@ public class UserService {
     public User getUserByEmail(String loggedEmail){
         return userRepository.findUserByEmail(loggedEmail);
     }
+
     public Boolean hasRole(Authentication auth, String roleName){
         if(auth == null){
             return false;

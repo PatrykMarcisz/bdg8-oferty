@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-//@Data
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Task {
@@ -30,6 +30,7 @@ public class Task {
     private String content;
     private Double price;
     private LocalDateTime publicationDate;
+    private Boolean status;
 
     // metoda do dodawania kategorii do zbioru
     public void addCategory(Category category){
@@ -48,53 +49,6 @@ public class Task {
         this.content = content;
         this.price = price;
         this.user = user;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Long getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Long taskId) {
-        this.taskId = taskId;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public LocalDateTime getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(LocalDateTime publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+        this.status = true;
     }
 }

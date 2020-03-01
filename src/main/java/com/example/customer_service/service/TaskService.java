@@ -62,4 +62,7 @@ public class TaskService {
             basketRepository.save(basket);
         }
     }
+    public void deleteTaskById(Long taskId){
+        taskRepository.deleteById(taskId);
+    }
 }

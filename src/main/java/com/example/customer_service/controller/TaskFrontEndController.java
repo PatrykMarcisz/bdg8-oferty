@@ -68,5 +68,10 @@ public class TaskFrontEndController {
         taskService.addTaskToUserBasket(auth, taskId);
         return "index";
     }
+    @GetMapping("/delete_task&{task_id}")
+    public String deleteTaskById(@PathVariable("task_id") Long taskId){
+        taskService.deleteTaskById(taskId);
+        return "redirect:/";
+    }
 
 }
