@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th=”http://www.thymeleaf.org”>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Panel użytkownika</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<!-- Page Header -->
+<header th:replace="fragments/header :: header(title='PANEL UŻYTKOWNIKA', subtitle='Twój panel użytkownika')"></header>
+
+<!-- Main Content -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1> Dane użytkownika </h1>
+
+            <h1> Dane zamówień </h1>
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+            <!--<p th:if="${info != null}" th:text="${info}" class="alert-info"> info </p>-->
+            <!--<div class="post-preview" th:each="task : ${tasks}">-->
+                <!--<div th:if="${task.getStatus()}">-->
+                    <!--<a th:href="@{'tasks&'+${task.getTaskId()}}">-->
+                        <!--<h2 class="post-title" th:text="${task.getContent()}">-->
+                            <!--content-->
+                        <!--</h2>-->
+                        <!--<h3 class="post-subtitle" th:text="${#numbers.formatDecimal(task.getPrice(),1,2)}+' PLN'">-->
+                            <!--price-->
+                        <!--</h3>-->
+                    <!--</a>-->
+                    <!--<p th:text="${'Autor: '+task.getUser().getName()+' '+task.getUser().getLastName()}"-->
+                       <!--class="post-meta">-->
+                        <!--task owner-->
+                    <!--</p>-->
+                    <!--&lt;!&ndash;<div class="clearfix">&ndash;&gt;-->
+                    <!--<a th:if="${isLogged && isAdmin}" style="color: red" class="fas fa-trash"-->
+                       <!--th:href="@{'/delete_task&'+${task.getTaskId()}}"></a>-->
+                    <!--<a th:if="${isLogged && !isAdmin && isCompany && task.getUser().getEmail().equals(loggedEmail)}" class="fas fa-trash"-->
+                       <!--th:href="@{'/delete_task&'+${task.getTaskId()}}"></a>-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--<hr>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<hr>-->
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
