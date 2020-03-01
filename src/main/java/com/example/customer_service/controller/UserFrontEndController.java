@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 @Controller
 public class UserFrontEndController {
@@ -77,6 +79,12 @@ public class UserFrontEndController {
         model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));         // do sprawdzania uprawnień R_A
         model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));     // do sprawdzania uprawnień R_C
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
+        model.addAttribute("user", auth != null ? userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()) : "");
+        model.addAttribute("roleList",
+                auth != null ?
+                        new ArrayList<>(userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()).getRoles()) :
+                        new ArrayList<>());
+
         return "userProfile";
     }
 

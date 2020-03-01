@@ -16,6 +16,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests()        // autoryzuj poniższe żądania http
                 .antMatchers("/addTask").hasAnyAuthority("ROLE_ADMIN","ROLE_COMPANY")
                 .antMatchers("/task*").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_USER")
+                .antMatchers("/delete_task*").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY")
+                .antMatchers("/userProfile").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_USER")
                                                 // tu wprowadzamy żądania wymagające logowania
                 .anyRequest()
                 .permitAll()                    // wszystkie pozostałe żądania nie wymagają autoryzacji
