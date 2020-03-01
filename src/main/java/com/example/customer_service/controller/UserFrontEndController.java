@@ -27,6 +27,8 @@ public class UserFrontEndController {
     @GetMapping("/login")
     public String login(Authentication auth, Model model){
         model.addAttribute("isLogged", auth != null);
+        model.addAttribute("user", auth != null ?
+                userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()) );
         return "login";
     }
     @GetMapping("/")
