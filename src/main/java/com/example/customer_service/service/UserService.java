@@ -152,6 +152,9 @@ public class UserService {
         return userRepository.findUserByEmail(loggedEmail);
     }
     public Boolean hasRole(Authentication auth, String roleName){
+        if(auth == null){
+            return false;
+        }
         UserDetails principal = (UserDetails) auth.getPrincipal();
         return principal.getAuthorities().stream().anyMatch(o -> ((GrantedAuthority) o).getAuthority().equals(roleName));
     }
