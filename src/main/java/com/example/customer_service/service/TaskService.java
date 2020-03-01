@@ -69,4 +69,9 @@ public class TaskService {
             taskRepository.save(task);
         }
     }
+    public List<Basket> getBasketsForUser(Authentication auth){
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        User user = userRepository.findUserByEmail(principal.getUsername());
+        return basketRepository.findAllByUser(user);
+    }
 }
