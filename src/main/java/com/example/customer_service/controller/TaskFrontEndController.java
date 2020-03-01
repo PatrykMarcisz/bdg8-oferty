@@ -70,7 +70,7 @@ public class TaskFrontEndController {
     }
     @GetMapping("/delete_task&{task_id}")
     public String deleteTaskById(@PathVariable("task_id") Long taskId){
-        taskService.deleteTaskById(taskId);
+        taskService.updateTaskStatusById(taskId, false);
         return "redirect:/";
     }
 
