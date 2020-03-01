@@ -54,7 +54,26 @@
 
                     <p id="sh" class="fas fa-user-edit"> edytuj dane </p>
                     <a id="ukryty_tekst">
-                        przykładowy tekst
+                        <h5>możesz edytować dowolne dane</h5>
+                        <form th:action="@{/updateUserData}" th:method="put" th:object="${user}">
+                            <div class="form-group">
+                                <p th:field="*{userId}" hidden></p>
+                                <p th:errors="*{name}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{name}" th:type="text" th:placeholder="imię" class="form-control"></br>
+                                <p th:errors="*{lastName}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{lastName}" th:type="text" th:placeholder="nazwisko" class="form-control"></br>
+                                <p th:errors="*{password}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{password}" th:type="password" th:placeholder="hasło" class="form-control"></br>
+                                <p th:errors="*{companyName}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{companyName}" th:type="text" th:placeholder="'nazwa firmy - nieobowiązkowe'" class="form-control"></br>
+                                <p th:errors="*{companyAddress}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{companyAddress}" th:type="text" th:placeholder="'adres firmy - nieobowiązkowe'" class="form-control"></br>
+                                <p th:errors="*{companyNip}" style="font-size: 10px" class="alert alert-danger"></p>
+                                <input th:field="*{companyNip}" th:type="text" th:placeholder="'nip firmy - nieobowiązkowe'" class="form-control"></br>
+
+                                <input th:type="submit" value="zaktualizuj" class="btn btn-primary mt-2 float-center">
+                            </div>
+                        </form>
                     </a>
                     <script>
                         var a = document.getElementById('ukryty_tekst');
