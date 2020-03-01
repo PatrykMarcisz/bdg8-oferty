@@ -90,25 +90,18 @@ public class UserService {
         return false;
     }
 
-    public Boolean updateUserById(Long userId, String name, String lastName,
-                                  String email, String password, String companyName, String companyAddress, String companyNip) {
-        Optional<User> userOpt = userRepository.findById(userId);
+    public void updateUser(User user) {     // obiekt przekazany z formularza
+        Optional<User> userOpt = userRepository.findById(user.getUserId());
         if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            if(userRepository.findUserByEmail(email) == null) {
-                user.setName(name != null ? name : user.getName());
-                user.setLastName(lastName != null ? lastName : user.getLastName());
-                user.setEmail(email != null ? email : user.getEmail());
-                user.setPassword(password != null ? password : user.getPassword());
-                user.setCompanyName(companyName != null && user.getCompanyName() != null ? companyName : user.getCompanyName());
-                user.setCompanyAddress(companyAddress != null && user.getCompanyAddress() != null ? companyAddress : user.getCompanyAddress());
-                user.setCompanyNip(companyNip != null && user.getCompanyNip() != null ? companyNip : user.getCompanyNip());
-                userRepository.save(user);      // UPDATE USER SET ...
-                return true;
-            }
-            return false;       // jest użytkownik o zadanym user_id ale podajesz istniejący w bazie email
+            User updatedUser = userOpt.get();   // oryginalny obiekt z DB
+            updatedUser.setName(user.getName());
+            updatedUser.setLastName(user.getLastName());
+            updatedUser.setPassword(user.getPassword());
+            updatedUser.setCompanyName(user.getCompanyName());
+            updatedUser.setCompanyAddress(user.getCompanyAddress());
+            updatedUser.setCompanyNip(user.getCompanyNip());
+            userRepository.save(updatedUser);               // aktualizacja danych
         }
-        return false;           // nie ma takiego użytkownika w badzie po user_id
     }
     public Boolean addRoleToUser(String roleName, Long userId){
         Optional<User> userOpt = userRepository.findById(userId);

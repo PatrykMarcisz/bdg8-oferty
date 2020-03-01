@@ -9,9 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -86,6 +84,31 @@ public class UserFrontEndController {
                         new ArrayList<>());
         model.addAttribute("baskets", taskService.getBasketsForUser(auth));
         return "userProfile";
+    }
+    @PostMapping("/updateUserData")
+    public String updateUserData(
+            @ModelAttribute @Valid User user, BindingResult bindingResult,
+            Authentication auth,
+            Model model){
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
+        model.addAttribute("isLogged", auth != null);
+        model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
+        model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));         // do sprawdzania uprawnień R_A
+        model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));     // do sprawdzania uprawnień R_C
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
+        model.addAttribute("user", auth != null ? userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()) : "");
+        model.addAttribute("roleList",
+                auth != null ?
+                        new ArrayList<>(userService.getUserByEmail(((UserDetails)auth.getPrincipal()).getUsername()).getRoles()) :
+                        new ArrayList<>());
+        model.addAttribute("baskets", taskService.getBasketsForUser(auth));
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.getDefaultMessage()));
+            return "userProfile";
+        }
+        // aktualizacja
+        userService.updateUser(user);
+        return "redirect:/userProfile";
     }
 
 }

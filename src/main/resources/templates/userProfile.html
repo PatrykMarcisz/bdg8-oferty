@@ -55,9 +55,9 @@
                     <p id="sh" class="fas fa-user-edit"> edytuj dane </p>
                     <a id="ukryty_tekst">
                         <h5>możesz edytować dowolne dane</h5>
-                        <form th:action="@{/updateUserData}" th:method="put" th:object="${user}">
+                        <form th:action="@{/updateUserData}" th:method="post" th:object="${user}">
                             <div class="form-group">
-                                <p th:field="*{userId}" hidden></p>
+                                <input th:field="*{userId}" hidden>
                                 <p th:errors="*{name}" style="font-size: 10px" class="alert alert-danger"></p>
                                 <input th:field="*{name}" th:type="text" th:placeholder="imię" class="form-control"></br>
                                 <p th:errors="*{lastName}" style="font-size: 10px" class="alert alert-danger"></p>

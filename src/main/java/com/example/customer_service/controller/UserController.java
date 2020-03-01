@@ -58,14 +58,14 @@ public class UserController {
             @RequestParam("password2") String password2){
         return userService.updatePassword(userId, password1, password2);
     }
-    @PutMapping("/updateUser")
-    public Boolean updataUserById(
-            @RequestParam("user_id") Long userId,
-            String name, String lastName, String email, String password, String companyName, String companyAddress, String companyNip
-    ){
-        return userService.updateUserById(userId, name, lastName,
-                email,password,companyName,companyAddress, companyNip);
-    }
+//    @PutMapping("/updateUser")
+//    public Boolean updataUserById(
+//            @RequestParam("user_id") Long userId,
+//            String name, String lastName, String email, String password, String companyName, String companyAddress, String companyNip
+//    ){
+//        return userService.updateUserById(userId, name, lastName,
+//                email,password,companyName,companyAddress, companyNip);
+//    }
     @PostMapping("/addRole")
     public Boolean addRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName){
         return userService.addRoleToUser(roleName, userId);
