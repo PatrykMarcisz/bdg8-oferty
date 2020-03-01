@@ -50,7 +50,7 @@
             <!--category-->
           <!--</p>-->
           <!--<div class="clearfix">-->
-          <a class="fas fa-trash" th:href="@{'/delete_task&'+${task.getTaskId()}}"></a>
+          <!--<a th:if="${isLogged && isAdmin}" style="color: red" class="fas fa-trash" th:href="@{'/delete_task&'+${task.getTaskId()}}"></a>-->
           <!--</div>-->
           <hr>
         </div>

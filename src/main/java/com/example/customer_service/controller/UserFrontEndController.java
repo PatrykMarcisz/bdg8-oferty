@@ -32,6 +32,7 @@ public class UserFrontEndController {
     public String index(Authentication auth, Model model){
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
+        userService.isAdmin(auth);
         return "index";     // nazwa widoku .html do wyświetlenia
     }
     @GetMapping("/registration")                        // <- to wywołuje formularz rejestracji

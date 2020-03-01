@@ -2,10 +2,15 @@ package com.example.customer_service.service;
 
 import com.example.customer_service.configuration.PasswdEncoder;
 import com.example.customer_service.model.Role;
+import com.example.customer_service.model.Task;
 import com.example.customer_service.model.User;
 import com.example.customer_service.repository.RoleRepository;
+import com.example.customer_service.repository.TaskRepository;
 import com.example.customer_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +25,12 @@ public class UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private TaskRepository taskRepository;
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, TaskRepository taskRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.taskRepository = taskRepository;
     }
 
     public List<User> getAllUsers() {
@@ -143,6 +150,10 @@ public class UserService {
 
     public User getUserByEmail(String loggedEmail){
         return userRepository.findUserByEmail(loggedEmail);
+    }
+    public Boolean hasRole(Authentication auth, String roleName){
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        return principal.getAuthorities().stream().anyMatch(o -> ((GrantedAuthority) o).getAuthority().equals(roleName));
     }
 }
 
