@@ -51,7 +51,26 @@
                     <ul>
                     <li th:each="r : ${roleList}" th:text="${r.getRoleName()}"> rola </li>
                     </ul>
-                    <a class="fas fa-user-edit" th:href="@{/user_edit}"> edytuj dane </a>
+
+                    <p id="sh" class="fas fa-user-edit"> edytuj dane </p>
+                    <a id="ukryty_tekst">
+                        przykładowy tekst
+                    </a>
+                    <script>
+                        var a = document.getElementById('ukryty_tekst');
+                        a.style.display = 'none';
+                        document.getElementById('sh').innerHTML = 'edytuj dane';
+                        document.getElementById('sh').onclick = function()
+                        {
+                            if(a.style.display == 'none') {
+                                a.style.display = 'block';
+                                this.innerHTML = 'zminimalizuj';
+                            } else {
+                                a.style.display = 'none';
+                                this.innerHTML = 'edytuj dane';
+                            }
+                        };
+                    </script>
                 </div>
             </div>
 
