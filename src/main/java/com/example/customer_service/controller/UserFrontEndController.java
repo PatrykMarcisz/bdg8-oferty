@@ -35,7 +35,7 @@ public class UserFrontEndController {
         model.addAttribute("tasks", taskService.getAllTasksOrderByPublicationDateDesc());
         model.addAttribute("isAdmin", userService.hasRole(auth, "ROLE_ADMIN"));         // do sprawdzania uprawnień R_A
         model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));     // do sprawdzania uprawnień R_C
-        model.addAttribute("loggedEmail", ((UserDetails)auth.getPrincipal()).getUsername());    // do sprawdzenia właściciela zadania
+        model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
         return "index";     // nazwa widoku .html do wyświetlenia
     }
     @GetMapping("/registration")                        // <- to wywołuje formularz rejestracji

@@ -56,9 +56,11 @@
                     <!--<div class="clearfix">-->
                     <a th:if="${isLogged && isAdmin}" style="color: red" class="fas fa-trash"
                        th:href="@{'/delete_task&'+${task.getTaskId()}}"></a>
+                    <a th:if="${isLogged && !isAdmin && isCompany && task.getUser().getEmail().equals(loggedEmail)}" class="fas fa-trash"
+                       th:href="@{'/delete_task&'+${task.getTaskId()}}"></a>
                     <!--</div>-->
+                    <hr>
                 </div>
-                <hr>
             </div>
         </div>
     </div>
