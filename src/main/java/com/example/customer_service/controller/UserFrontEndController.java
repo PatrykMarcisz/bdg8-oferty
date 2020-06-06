@@ -19,17 +19,20 @@ import java.util.HashSet;
 public class UserFrontEndController {
     private UserService userService;
     private TaskService taskService;
+
     @Autowired
     public UserFrontEndController(UserService userService, TaskService taskService) {
         this.userService = userService;
         this.taskService = taskService;
     }
+
     @GetMapping("/login")
     public String login(Authentication auth, Model model){
         model.addAttribute("isLogged", auth != null);
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
         return "login";
     }
+
     @GetMapping("/")
     public String index(Authentication auth, Model model){
         model.addAttribute("isLogged", auth != null);
@@ -39,6 +42,7 @@ public class UserFrontEndController {
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
         return "index";     // nazwa widoku .html do wyświetlenia
     }
+
     @GetMapping("/registration")                        // <- to wywołuje formularz rejestracji
     public String registration(Authentication auth, Model model){            // model komunikuje back-end z szablonem Thymeleaf
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
@@ -46,6 +50,7 @@ public class UserFrontEndController {
         model.addAttribute("user", new User());       // przekazujemy do Thymelaf resolvera obiekt user
         return "registration";
     }
+
     @PostMapping("/registration")                       // <- to przekazywane są dane rejestracji
     public String registration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model,
                                Authentication auth){
@@ -67,6 +72,7 @@ public class UserFrontEndController {
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");
         return "index";
     }
+
     @GetMapping("/userProfile")
     public String userProfile(
             Authentication auth,
@@ -85,6 +91,7 @@ public class UserFrontEndController {
         model.addAttribute("baskets", taskService.getBasketsForUser(auth));
         return "userProfile";
     }
+
     @PostMapping("/updateUserData")
     public String updateUserData(
             @ModelAttribute @Valid User user, BindingResult bindingResult,

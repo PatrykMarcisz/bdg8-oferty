@@ -1,6 +1,5 @@
 package com.example.customer_service.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,9 +11,18 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity      // klasa implementująca metody configure dla http, jdbc, oauth2
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private final DataSource dataSource;
+    private final SecurityConfig passwdEncoder;
+
+    public SecurityConfiguration(DataSource dataSource, SecurityConfig passwdEncoder) {
+        this.dataSource = dataSource;
+        this.passwdEncoder = passwdEncoder;
+    }
+
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()        // autoryzuj poniższe żądania http
-                .antMatchers("/addTask").hasAnyAuthority("ROLE_ADMIN","ROLE_COMPANY")
+                .antMatchers("/addTask").hasAnyAuthority("ROLE_ADMIN","ROLE_COMPANY") //mozna uzywac HAS_ANY_ROLE
                 .antMatchers("/task*").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_USER")
                 .antMatchers("/delete_task*").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY")
                 .antMatchers("/userProfile").hasAnyAuthority("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_USER")
@@ -23,22 +31,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()                    // wszystkie pozostałe żądania nie wymagają autoryzacji
                     .and()
                 .csrf().disable()
+                .headers()
+                    .frameOptions()
+                    .disable()
+                    .and()
                 .formLogin()
                     .loginPage("/login")                // adres zwracający stronę logowania
-                    .usernameParameter("email")         // nazwa pola dla loginu -> th:name
-                    .passwordParameter("password")      // nazwa pola dla hasła -> th:name
-                    .loginProcessingUrl("/login-process") // wskazuje adres gdzie są przekazywane te wartości -> nie trzeba mapować w kontrolerze
-                    .defaultSuccessUrl("/") // przekierowanie po poprawnym logowaniu
-                    .failureUrl("/login_error")
-                .and()
-                    .logout()
+                        .usernameParameter("email")         // nazwa pola dla loginu -> th:name
+                        .passwordParameter("password")      // nazwa pola dla hasła -> th:name
+                        .loginProcessingUrl("/login-process") // wskazuje adres gdzie są przekazywane te wartości -> nie trzeba mapować w kontrolerze
+                        .defaultSuccessUrl("/") // przekierowanie po poprawnym logowaniu
+                        .failureUrl("/login_error")
+                        .and()
+                .logout()
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/");
     }
-    @Autowired
-    DataSource dataSource;
-    @Autowired
-    PasswdEncoder passwdEncoder;
+
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .jdbcAuthentication()

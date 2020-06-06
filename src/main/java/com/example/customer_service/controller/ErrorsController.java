@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ErrorsController implements ErrorController {
-    private UserService userService;
+
+    private final UserService userService;
+
     @Autowired
     public ErrorsController(UserService userService) {
         this.userService = userService;
@@ -21,6 +23,7 @@ public class ErrorsController implements ErrorController {
     public String getErrorPath() {
         return "/error";
     }
+
     @GetMapping("/error")
     public String errorPage(Model model, Authentication auth){
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania
@@ -29,6 +32,7 @@ public class ErrorsController implements ErrorController {
         model.addAttribute("isCompany", userService.hasRole(auth, "ROLE_COMPANY"));     // do sprawdzania uprawnień R_C
         return "errorPage";
     }
+
     @GetMapping("/login_error")
     public String loginErrorPage(Model model, Authentication auth){
         model.addAttribute("loggedEmail", auth != null ? ((UserDetails)auth.getPrincipal()).getUsername() : "");    // do sprawdzenia właściciela zadania

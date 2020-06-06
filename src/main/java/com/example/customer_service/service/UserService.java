@@ -1,8 +1,6 @@
 package com.example.customer_service.service;
 
-import com.example.customer_service.configuration.PasswdEncoder;
 import com.example.customer_service.model.Role;
-import com.example.customer_service.model.Task;
 import com.example.customer_service.model.User;
 import com.example.customer_service.repository.RoleRepository;
 import com.example.customer_service.repository.TaskRepository;
@@ -14,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.*;
 
