@@ -98,7 +98,10 @@ public class UserService {
             updatedUser.setCompanyAddress(user.getCompanyAddress());
             updatedUser.setCompanyNip(user.getCompanyNip());
             userRepository.save(updatedUser);               // aktualizacja danych
+        } else {
+            throw new RuntimeException("user not found");
         }
+
     }
     public Boolean addRoleToUser(String roleName, Long userId){
         Optional<User> userOpt = userRepository.findById(userId);

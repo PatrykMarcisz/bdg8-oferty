@@ -33,7 +33,7 @@ public class CustomerServiceApplication {
             user.setEmail("patryk.marcisz@gmail.com");
             user.setLastName("Marcisz");
             user.setName("Patryk");
-            user.setPassword(passwordEncoder.encode("12345"));
+            user.setPassword(passwordEncoder.encode("123456"));
             user.setRegistrationDate(LocalDateTime.now());
             user.setStatus(true);
             user.setRoles(new HashSet<>(roleRepository.findAll()));
