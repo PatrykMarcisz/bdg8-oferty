@@ -2,13 +2,14 @@ package com.example.customer_service.controller;
 
 import com.example.customer_service.model.User;
 import com.example.customer_service.service.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Entity;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @RequestMapping("/rest")
 @RestController   // mapuje żądania http i zwraca Obiekt API
 //@Controller     // mapuje żądania http i zwraca nazwę widoku gdzie są przekazywane Obiekty
@@ -23,72 +24,73 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/users/id={user_id}")      // {część zmienna ścieżki}
-    public User getUserById(@PathVariable("user_id") Long user_id){
+    public User getUserById(@PathVariable("user_id") Long user_id) {
         Optional<User> userOpt = userService.getUserById(user_id);
         return userOpt.orElseGet(User::new);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register") //czy request wyslany na ten enpoint sprawi ze uzytkownik bedzie w stanie sie zalogowac ?
+    //patrz password
     public Boolean register(@RequestParam String name, @RequestParam String lastName, @RequestParam String email,
-                            @RequestParam String password, String companyName, String companyAddress, String nip){
-        if(nip == null){
-        return userService.register(
-                new User(name, lastName, email, password, LocalDateTime.now(), true, new ArrayList<>())
+                            @RequestParam String password, String companyName, String companyAddress, String nip) {
+        if (nip == null) {
+            return userService.register(
+                    new User(name, lastName, email, password, LocalDateTime.now(), true, new ArrayList<>())
             );
         }
         return userService.register(
                 new User(name, lastName, email, password, LocalDateTime.now(), true, new ArrayList<>(),
-                companyName, companyAddress, nip)
+                        companyName, companyAddress, nip)
         );
     }
 
     @DeleteMapping("/delete")
-    public Boolean deleteUserByEmail(@RequestParam String userEmail){
+    public Boolean deleteUserByEmail(@RequestParam String userEmail) {
         return userService.deleteUser(userEmail);
     }
 
     @PutMapping("/updateUserStatus")
     public Boolean updateStatus(
             @RequestParam("user_id") Long userId,
-            @RequestParam("status") Boolean status){
+            @RequestParam("status") Boolean status) {
         return userService.updateStatus(userId, status);
     }
 
-    @PutMapping("/updateUserPassword")
+    @PutMapping("/updateUserPassword") //tak samo, czy to haslo umozliwi zalogowanie pozniej ?
     public Boolean updatePassword(
             @RequestParam("user_id") Long userId,
             @RequestParam("password1") String password1,
-            @RequestParam("password2") String password2){
+            @RequestParam("password2") String password2) {
         return userService.updatePassword(userId, password1, password2);
     }
 
     @PostMapping("/addRole")
-    public Boolean addRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName){
+    public Boolean addRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName) {
         return userService.addRoleToUser(roleName, userId);
     }
 
     @DeleteMapping("/removeRole")
-    public Boolean removeRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName){
+    public Boolean removeRoleToUser(@RequestParam("user_id") Long userId, @RequestParam String roleName) {
         return userService.removeRoleFromUser(roleName, userId);
     }
 
     @GetMapping("/findUsersWithRoles")
-    public void findAllEmailAndRoleName(){
+    public void findAllEmailAndRoleName() {
         userService.findAllEmailAndRoleName();
     }
 
     @PutMapping("/changeAllUsersStatus")
-    public void changeStatusToUsers(@RequestParam("status") Boolean status){
+    public void changeStatusToUsers(@RequestParam("status") Boolean status) {
         userService.changeStatusToUsers(status);
     }
 
     @DeleteMapping("/deleteUserRoleNames")
-    public void deleteUserRoleNames(@RequestParam String roleName){
+    public void deleteUserRoleNames(@RequestParam String roleName) {
         userService.deleteAllRoleNamesFromUser(roleName);
     }
 

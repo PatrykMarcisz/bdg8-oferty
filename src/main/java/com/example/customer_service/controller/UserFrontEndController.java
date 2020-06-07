@@ -17,6 +17,7 @@ import java.util.HashSet;
 
 @Controller
 public class UserFrontEndController {
+
     private UserService userService;
     private TaskService taskService;
 
