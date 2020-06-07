@@ -17,17 +17,18 @@ import java.util.*;
 
 @Service            // klasa logiki biznesowej zarządzana w Spring Context
 public class UserService {
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private TaskRepository taskRepository;
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, TaskRepository taskRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, TaskRepository taskRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.taskRepository = taskRepository;
+        this.passwordEncoder=passwordEncoder;
     }
 
     public List<User> getAllUsers() {
@@ -79,7 +80,7 @@ public class UserService {
             Optional<User> userOpt = userRepository.findById(userId);
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
-                user.setPassword(password1);
+                user.setPassword(passwordEncoder.encode(password1));
                 userRepository.save(user);
                 return true;
             }

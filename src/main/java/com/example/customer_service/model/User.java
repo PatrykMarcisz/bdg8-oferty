@@ -27,6 +27,7 @@ public class User {
     @NotBlank(message = "pole obowiązkowe")
     @Size(min = 3, max = 255, message = "imię musi zawierać od {min} do {max} znaków")
     private String name;
+    @Column(name = "last_name")
     @NotBlank(message = "pole obowiązkowe")
     @Size(min = 3, max = 255, message = "nazwisko musi zawierać od {min} do {max} znaków")
     private String lastName;
